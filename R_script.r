@@ -3,8 +3,8 @@ library('rvest')
 # IPS website root
 page1="https://www.ebi.ac.uk/interpro/entry/"
 
-# Create a matrix scaffold
-df1 <- matrix(ncol=1)
+# Create a list scaffold
+df1 <- list()
 df1 <- NULL
 
 # List of IPR IDs
@@ -20,11 +20,11 @@ for(i in 1:179){
   GOTerms <- InterPro %>% 
     html_nodes(".goSections .ext") %>%
     html_text()
-  df1 <- rbind(df1, GOTerms)
+  df1[[i]] <- GOTerms
 }
 
 print(df1)  
 
-write.csv(df1, "GOTerms.csv")
+write.csv(unlist(df1), "GOTerms.csv")
 # Use this list to search for Gene Ontology using  "https://www.ebi.ac.uk/QuickGO/slimming"
 # Paste into the "Input your own" tab
